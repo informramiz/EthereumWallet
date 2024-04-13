@@ -1,0 +1,2 @@
+# EthereumWallet
+Sample Ethereum Wallet
