@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -86,20 +87,7 @@ private fun ScreenUI(viewModel: HomeViewModel, viewState: HomeViewState) {
                     Text(text = "Add Existing Wallet")
                 }
             } else {
-                Text(
-                    modifier = Modifier.align(Alignment.Start),
-                    text = "Wallet Address: ${viewState.walletAddress}"
-                )
-                Text(
-                    modifier = Modifier.align(Alignment.Start),
-                    text = "Balance: ${
-                        String.format(
-                            Locale.US,
-                            "%.5f",
-                            viewState.walletBalance
-                        )
-                    } Eth"
-                )
+                WalletInfo(viewState)
                 Button(onClick = { viewModel.onSendEthAction() }) {
                     Text(text = "Send Eth")
                 }
@@ -114,5 +102,27 @@ private fun ScreenUI(viewModel: HomeViewModel, viewState: HomeViewState) {
             refreshing = viewState.isRefreshing,
             state = pullToRefreshState
         )
+    }
+}
+
+@Composable
+private fun WalletInfo(viewState: HomeViewState) {
+    SelectionContainer {
+        Column {
+            Text(
+                modifier = Modifier.align(Alignment.Start),
+                text = "Wallet Address: ${viewState.walletAddress}",
+            )
+            Text(
+                modifier = Modifier.align(Alignment.Start),
+                text = "Balance: ${
+                    String.format(
+                        Locale.US,
+                        "%.5f",
+                        viewState.walletBalance
+                    )
+                } Eth"
+            )
+        }
     }
 }
