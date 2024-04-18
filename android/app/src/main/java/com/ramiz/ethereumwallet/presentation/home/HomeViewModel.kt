@@ -5,6 +5,7 @@ import com.ramiz.ethereumwallet.data.EthereumRepository
 import com.ramiz.ethereumwallet.data.UserRepository
 import com.ramiz.ethereumwallet.presentation.core.viewmodel.ScreenBaseViewModel
 import com.ramiz.ethereumwallet.ui.screens.importwallet.ImportWalletNavigationDestination
+import com.ramiz.ethereumwallet.ui.screens.transfereth.TransferEthNavigationDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -63,7 +64,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onSendEthAction() {
-        // TODO
+        navigate(TransferEthNavigationDestination)
     }
 
     fun onLogoutAction() {

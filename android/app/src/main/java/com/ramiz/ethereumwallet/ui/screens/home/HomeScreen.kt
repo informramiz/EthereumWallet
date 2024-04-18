@@ -28,11 +28,13 @@ import com.ramiz.ethereumwallet.ui.components.AppScaffold
 import com.ramiz.ethereumwallet.ui.components.ScreenNavigation
 import com.ramiz.ethereumwallet.ui.components.ScreenNotification
 import com.ramiz.ethereumwallet.ui.screens.importwallet.ImportWalletNavigationDestination
+import com.ramiz.ethereumwallet.ui.screens.transfereth.TransferEthNavigationDestination
 import java.util.Locale
 
 @Composable
 fun HomeScreen(
     onNavigateToImportWallet: () -> Unit,
+    onNavigateToTransferEth: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.viewState.collectAsState()
@@ -59,6 +61,7 @@ fun HomeScreen(
         navigationCommand = navigationCommand) { destination ->
         when (destination) {
             is ImportWalletNavigationDestination -> onNavigateToImportWallet()
+            is TransferEthNavigationDestination -> onNavigateToTransferEth()
         }
     }
 }
@@ -97,7 +100,7 @@ private fun ScreenUI(viewModel: HomeViewModel, viewState: HomeViewState) {
                         )
                     } Eth"
                 )
-                Button(onClick = { /*TODO*/ }) {
+                Button(onClick = { viewModel.onSendEthAction() }) {
                     Text(text = "Send Eth")
                 }
                 Button(onClick = { viewModel.onLogoutAction() }) {

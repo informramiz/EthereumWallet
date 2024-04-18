@@ -1,5 +1,6 @@
 package com.ramiz.ethereumwallet.ui.components
 
+import android.widget.Toast
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -30,6 +31,18 @@ fun <V: ViewState> ScreenNotification(
     val context = LocalContext.current
     LaunchedEffect(key1 = notificationCommand) {
         notificationCommand?.let { snackbarHostState.showSnackbar(it.resolveMessage(context)) }
+        viewModel.onNotifyDone()
+    }
+}
+
+@Composable
+fun <V: ViewState> ScreenNotification(
+    viewModel: ScreenBaseViewModel<V>,
+    notificationCommand: NotificationCommand?
+) {
+    val context = LocalContext.current
+    LaunchedEffect(key1 = notificationCommand) {
+        notificationCommand?.let { Toast.makeText(context, it.resolveMessage(context), Toast.LENGTH_SHORT).show() }
         viewModel.onNotifyDone()
     }
 }
