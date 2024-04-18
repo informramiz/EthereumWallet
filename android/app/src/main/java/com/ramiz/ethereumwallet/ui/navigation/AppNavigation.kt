@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ramiz.ethereumwallet.ui.screens.AppScreen
+import com.ramiz.ethereumwallet.ui.screens.createwallet.CreateWalletScreen
 import com.ramiz.ethereumwallet.ui.screens.home.HomeScreen
 import com.ramiz.ethereumwallet.ui.screens.importwallet.ImportWalletScreen
 import com.ramiz.ethereumwallet.ui.screens.transfereth.TransferEthScreen
@@ -17,7 +18,8 @@ fun AppNavigation() {
         composable(route = AppScreen.Home.route) {
             HomeScreen(
                 onNavigateToImportWallet = {  navController.navigate(route = AppScreen.ImportWallet.route) },
-                onNavigateToTransferEth = { navController.navigate(route = AppScreen.TransferEth.route) }
+                onNavigateToTransferEth = { navController.navigate(route = AppScreen.TransferEth.route) },
+                onNavigateToCreateWallet = { navController.navigate(route = AppScreen.CreateWallet.route) }
             )
         }
 
@@ -29,6 +31,10 @@ fun AppNavigation() {
 
         composable(route = AppScreen.TransferEth.route) {
             TransferEthScreen(onNavigateUp = { navController.navigateUp() })
+        }
+
+        composable(route = AppScreen.CreateWallet.route) {
+            CreateWalletScreen(onNavigateUp = { navController.navigateUp() })
         }
     }
 }

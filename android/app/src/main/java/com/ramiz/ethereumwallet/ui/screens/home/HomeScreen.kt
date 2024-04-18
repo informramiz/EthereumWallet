@@ -29,6 +29,7 @@ import com.ramiz.ethereumwallet.presentation.home.HomeViewState
 import com.ramiz.ethereumwallet.ui.components.AppScaffold
 import com.ramiz.ethereumwallet.ui.components.ScreenNavigation
 import com.ramiz.ethereumwallet.ui.components.ScreenNotification
+import com.ramiz.ethereumwallet.ui.screens.createwallet.CreateWalletNavigationDestination
 import com.ramiz.ethereumwallet.ui.screens.importwallet.ImportWalletNavigationDestination
 import com.ramiz.ethereumwallet.ui.screens.transfereth.TransferEthNavigationDestination
 import java.util.Locale
@@ -37,6 +38,7 @@ import java.util.Locale
 fun HomeScreen(
     onNavigateToImportWallet: () -> Unit,
     onNavigateToTransferEth: () -> Unit,
+    onNavigateToCreateWallet: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.viewState.collectAsState()
@@ -71,6 +73,7 @@ fun HomeScreen(
         when (destination) {
             is ImportWalletNavigationDestination -> onNavigateToImportWallet()
             is TransferEthNavigationDestination -> onNavigateToTransferEth()
+            is CreateWalletNavigationDestination -> onNavigateToCreateWallet()
         }
     }
 }
@@ -93,6 +96,10 @@ private fun ScreenUI(viewModel: HomeViewModel, viewState: HomeViewState) {
             if (!viewState.isWalletActive) {
                 Button(onClick = { viewModel.onAddExistingWalletAction() }) {
                     Text(text = "Add Existing Wallet")
+                }
+
+                Button(onClick = { viewModel.onCreateNewWalletAction() }) {
+                    Text(text = "Create New Wallet")
                 }
             } else {
                 WalletInfo(viewState)

@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.ramiz.ethereumwallet.data.EthereumRepository
 import com.ramiz.ethereumwallet.data.UserRepository
 import com.ramiz.ethereumwallet.presentation.core.viewmodel.ScreenBaseViewModel
+import com.ramiz.ethereumwallet.ui.screens.createwallet.CreateWalletNavigationDestination
 import com.ramiz.ethereumwallet.ui.screens.importwallet.ImportWalletNavigationDestination
 import com.ramiz.ethereumwallet.ui.screens.transfereth.TransferEthNavigationDestination
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -65,6 +66,10 @@ class HomeViewModel @Inject constructor(
 
     fun onAddExistingWalletAction() {
         navigate(ImportWalletNavigationDestination)
+    }
+
+    fun onCreateNewWalletAction() {
+        navigate(CreateWalletNavigationDestination)
     }
 
     fun onSendEthAction() {
