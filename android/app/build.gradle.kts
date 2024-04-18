@@ -38,6 +38,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -64,6 +65,9 @@ dependencies {
 
     //Web3j
     implementation(libs.web3j.client)
+
+    //Logging
+    implementation(libs.logging.timber)
 
     // Test and Debug Implementations
     testImplementation(libs.junit)
