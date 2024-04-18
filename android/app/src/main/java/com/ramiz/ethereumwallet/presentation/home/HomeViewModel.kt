@@ -37,6 +37,9 @@ class HomeViewModel @Inject constructor(
                     )
                 }
                 credentials?.let { fetchWalletBalance(it) }
+                if (credentials == null) {
+                    updateState { it.copy(isLoading = false) }
+                }
             }
             .launchIn(viewModelScope)
     }
