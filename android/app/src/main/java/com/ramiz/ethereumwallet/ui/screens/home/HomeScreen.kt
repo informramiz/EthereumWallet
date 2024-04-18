@@ -46,7 +46,7 @@ fun HomeScreen(
         SnackbarHostState()
     }
     AppScaffold(
-        title = "Ethereum Wallet",
+        title = "Sepolia Ethereum Wallet",
         snackbarHostState = snackbarHostState
     ) {
         if (viewState.isLoading) {
