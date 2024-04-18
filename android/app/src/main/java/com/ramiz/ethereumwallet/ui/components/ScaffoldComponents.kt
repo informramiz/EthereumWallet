@@ -5,6 +5,7 @@ package com.ramiz.ethereumwallet.ui.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -57,7 +58,7 @@ fun AppScaffold(
         snackbarHost = snackbarHost,
         floatingActionButton = appFloatingActionButton(params = floatingActionButtonParams)
     ) { contentPadding ->
-        Box(modifier = Modifier.padding(contentPadding)) {
+        Box(modifier = Modifier.fillMaxSize().padding(contentPadding)) {
             content()
         }
     }

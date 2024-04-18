@@ -13,6 +13,7 @@ import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -46,7 +47,14 @@ fun HomeScreen(
         title = "Ethereum Wallet",
         snackbarHostState = snackbarHostState
     ) {
-        ScreenUI(viewModel = viewModel, viewState = viewState)
+        if (viewState.isLoading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        } else {
+            ScreenUI(
+                viewModel = viewModel,
+                viewState = viewState
+            )
+        }
     }
 
     val notificationCommand by viewModel.notificationCommand.collectAsState()

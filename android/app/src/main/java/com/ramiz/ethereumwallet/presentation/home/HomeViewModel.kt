@@ -26,6 +26,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun fetchData() {
+        updateState { it.copy(isLoading = true) }
         userRepository.getSavedWalletCredentials()
             .catchWithDefaultErrorHandler()
             .onEach { credentials ->
@@ -46,7 +47,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun fetchWalletBalance(credentials: Credentials) {
-        launchWithErrorHandling {
+        launchWithDefaultErrorHandling {
             val balance = ethereumRepository.getEthBalance(credentials.address)
             updateState {
                 it.copy(
