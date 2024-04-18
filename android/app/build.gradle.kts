@@ -47,7 +47,7 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += setOf("/META-INF/{AL2.0,LGPL2.1}", "DebugProbesKt.bin")
         }
     }
 }
@@ -81,6 +81,10 @@ dependencies {
 
     //Logging
     implementation(libs.logging.timber)
+
+    // Kotlin Coroutines
+    implementation(libs.kotlin.coroutines.core)
+    implementation(libs.kotlin.coroutines.android)
 
     // Test and Debug Implementations
     testImplementation(libs.junit)
