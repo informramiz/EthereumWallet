@@ -1,4 +1,4 @@
-package com.ramiz.ethereumwallet.ui.screens.home
+package com.ramiz.ethereumwallet.ui.screens.importwallet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,23 +13,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.ramiz.ethereumwallet.presentation.core.viewstate.ViewState
-import com.ramiz.ethereumwallet.presentation.home.HomeViewModel
+import com.ramiz.ethereumwallet.presentation.importwallet.ImportWalletViewModel
 import com.ramiz.ethereumwallet.ui.components.AppScaffold
 import com.ramiz.ethereumwallet.ui.components.ScreenNavigation
 import com.ramiz.ethereumwallet.ui.components.ScreenNotification
-import com.ramiz.ethereumwallet.ui.screens.importwallet.ImportWalletNavigationDestination
 
 @Composable
-fun HomeScreen(
-    onNavigateToImportWallet: () -> Unit,
-    viewModel: HomeViewModel = hiltViewModel()
+fun ImportWalletScreen(
+    onNavigateUp: () -> Unit,
+    viewModel: ImportWalletViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.viewState.collectAsState()
     val snackbarHostState = remember {
         SnackbarHostState()
     }
     AppScaffold(
-        title = "Ethereum Wallet",
+        title = "Import Wallet",
         snackbarHostState = snackbarHostState
     ) {
         ScreenUI(viewModel = viewModel, viewState = viewState)
@@ -45,21 +44,20 @@ fun HomeScreen(
     val navigationCommand by viewModel.navigationCommand.collectAsState()
     ScreenNavigation(
         viewModel = viewModel,
+        onNavigateUp = onNavigateUp,
         navigationCommand = navigationCommand) { destination ->
-        when (destination) {
-            is ImportWalletNavigationDestination -> onNavigateToImportWallet()
-        }
+        // TODO
     }
 }
 
 @Composable
-private fun ScreenUI(viewModel: HomeViewModel, viewState: ViewState) {
+private fun ScreenUI(viewModel: ImportWalletViewModel, viewState: ViewState) {
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Button(onClick = { viewModel.onAddExistingWalletAction() }) {
-            Text(text = "Add Existing Wallet")
+        Button(onClick = {  }) {
+            Text(text = "Import")
         }
     }
 }
