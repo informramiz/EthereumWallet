@@ -1,9 +1,16 @@
 package com.ramiz.ethereumwallet.ui.screens.home
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
 import androidx.compose.material3.Button
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -55,30 +62,44 @@ fun HomeScreen(
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ScreenUI(viewModel: HomeViewModel, viewState: HomeViewState) {
-    Column(
-        modifier = Modifier.fillMaxSize().padding(20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(10.dp)
-    ) {
-        if (!viewState.isWalletActive) {
-            Button(onClick = { viewModel.onAddExistingWalletAction() }) {
-                Text(text = "Add Existing Wallet")
-            }
-        } else {
-            Text(
-                text = """
-                    Wallet Address: ${viewState.walletAddress}
-                    Balance: ${viewState.walletBalance} Eth
-                """.trimIndent()
-            )
-            Button(onClick = { /*TODO*/ }) {
-                Text(text = "Send Eth")
-            }
-            Button(onClick = { viewModel.onLogoutAction() }) {
-                Text(text = "Logout")
+    val pullToRefreshState = rememberPullRefreshState(refreshing = viewState.isRefreshing, onRefresh = { viewModel.refresh() })
+    Box(modifier = Modifier.fillMaxSize()
+        .pullRefresh(pullToRefreshState)
+        .verticalScroll(rememberScrollState())) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
+            if (!viewState.isWalletActive) {
+                Button(onClick = { viewModel.onAddExistingWalletAction() }) {
+                    Text(text = "Add Existing Wallet")
+                }
+            } else {
+                Text(
+                    text = """
+                        Wallet Address: ${viewState.walletAddress}
+                        Balance: ${viewState.walletBalance} Eth
+                    """.trimIndent()
+                )
+                Button(onClick = { /*TODO*/ }) {
+                    Text(text = "Send Eth")
+                }
+                Button(onClick = { viewModel.onLogoutAction() }) {
+                    Text(text = "Logout")
+                }
             }
         }
+
+        PullRefreshIndicator(
+            modifier = Modifier.align(Alignment.TopCenter),
+            refreshing = viewState.isRefreshing,
+            state = pullToRefreshState
+        )
     }
 }

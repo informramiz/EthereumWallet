@@ -21,6 +21,10 @@ class HomeViewModel @Inject constructor(
     override fun defaultViewState() = HomeViewState()
 
     init {
+        fetchData()
+    }
+
+    private fun fetchData() {
         userRepository.getSavedWalletCredentials()
             .catchWithDefaultErrorHandler()
             .onEach { credentials ->
@@ -33,7 +37,11 @@ class HomeViewModel @Inject constructor(
                 credentials?.let { fetchWalletBalance(it) }
             }
             .launchIn(viewModelScope)
+    }
 
+    fun refresh() {
+        updateState { it.copy(isRefreshing = true) }
+        fetchData()
     }
 
     private fun fetchWalletBalance(credentials: Credentials) {
@@ -42,7 +50,9 @@ class HomeViewModel @Inject constructor(
             updateState {
                 it.copy(
                     walletBalance = Convert.fromWei(balance.toBigDecimal(), Convert.Unit.ETHER)
-                        .toDouble()
+                        .toDouble(),
+                    isLoading = false,
+                    isRefreshing = false
                 )
             }
         }
