@@ -28,6 +28,7 @@ import com.ramiz.ethereumwallet.ui.components.AppScaffold
 import com.ramiz.ethereumwallet.ui.components.ScreenNavigation
 import com.ramiz.ethereumwallet.ui.components.ScreenNotification
 import com.ramiz.ethereumwallet.ui.screens.importwallet.ImportWalletNavigationDestination
+import java.util.Locale
 
 @Composable
 fun HomeScreen(
@@ -66,7 +67,8 @@ fun HomeScreen(
 @Composable
 private fun ScreenUI(viewModel: HomeViewModel, viewState: HomeViewState) {
     val pullToRefreshState = rememberPullRefreshState(refreshing = viewState.isRefreshing, onRefresh = { viewModel.refresh() })
-    Box(modifier = Modifier.fillMaxSize()
+    Box(modifier = Modifier
+        .fillMaxSize()
         .pullRefresh(pullToRefreshState)
         .verticalScroll(rememberScrollState())) {
         Column(
@@ -82,10 +84,18 @@ private fun ScreenUI(viewModel: HomeViewModel, viewState: HomeViewState) {
                 }
             } else {
                 Text(
-                    text = """
-                        Wallet Address: ${viewState.walletAddress}
-                        Balance: ${viewState.walletBalance} Eth
-                    """.trimIndent()
+                    modifier = Modifier.align(Alignment.Start),
+                    text = "Wallet Address: ${viewState.walletAddress}"
+                )
+                Text(
+                    modifier = Modifier.align(Alignment.Start),
+                    text = "Balance: ${
+                        String.format(
+                            Locale.US,
+                            "%.5f",
+                            viewState.walletBalance
+                        )
+                    } Eth"
                 )
                 Button(onClick = { /*TODO*/ }) {
                     Text(text = "Send Eth")
