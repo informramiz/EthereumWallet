@@ -66,20 +66,20 @@ fun main() {
     val wallet2 = loadBip39WalletCredentials(mnemonic = WALLET2_MNEMONIC)
     println("Wallet2 Address: ${wallet2.address}, Balance: ${web3Client.ethBalanceByLatestBlock(wallet2.address).toEth()} Eth")
 
-    println("Sending eth from wallet1 to Wallet2...")
-    val transactionReceipt = web3Client.sendFunds(wallet1, wallet2.address,0.01)
-    println(
-        """
-            ----> Transaction Successful
-            Transaction id: ${transactionReceipt.transactionIndex}
-            Transaction Hash: ${transactionReceipt.transactionHash}
-            Transaction block Hash: ${transactionReceipt.blockHash}
-            Transaction block number: ${transactionReceipt.blockNumber}
-        """.trimIndent()
-    )
-    println("----> Updated Balances are below")
-    println("Wallet1 Address: ${wallet1.address}, Balance: ${web3Client.ethBalanceByLatestBlock(wallet1.address).toEth()} Eth")
-    println("Wallet2 Address: ${wallet2.address}, Balance: ${web3Client.ethBalanceByLatestBlock(wallet2.address).toEth()} Eth")
+//    println("Sending eth from wallet1 to Wallet2...")
+//    val transactionReceipt = web3Client.sendFunds(wallet1, wallet2.address,0.01)
+//    println(
+//        """
+//            ----> Transaction Successful
+//            Transaction id: ${transactionReceipt.transactionIndex}
+//            Transaction Hash: ${transactionReceipt.transactionHash}
+//            Transaction block Hash: ${transactionReceipt.blockHash}
+//            Transaction block number: ${transactionReceipt.blockNumber}
+//        """.trimIndent()
+//    )
+//    println("----> Updated Balances are below")
+//    println("Wallet1 Address: ${wallet1.address}, Balance: ${web3Client.ethBalanceByLatestBlock(wallet1.address).toEth()} Eth")
+//    println("Wallet2 Address: ${wallet2.address}, Balance: ${web3Client.ethBalanceByLatestBlock(wallet2.address).toEth()} Eth")
 }
 
 /**

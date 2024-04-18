@@ -1,7 +1,9 @@
 package com.ramiz.ethereumwallet.ui.screens.home
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -11,9 +13,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.ramiz.ethereumwallet.presentation.core.viewstate.ViewState
 import com.ramiz.ethereumwallet.presentation.home.HomeViewModel
+import com.ramiz.ethereumwallet.presentation.home.HomeViewState
 import com.ramiz.ethereumwallet.ui.components.AppScaffold
 import com.ramiz.ethereumwallet.ui.components.ScreenNavigation
 import com.ramiz.ethereumwallet.ui.components.ScreenNotification
@@ -53,13 +56,29 @@ fun HomeScreen(
 }
 
 @Composable
-private fun ScreenUI(viewModel: HomeViewModel, viewState: ViewState) {
+private fun ScreenUI(viewModel: HomeViewModel, viewState: HomeViewState) {
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier = Modifier.fillMaxSize().padding(20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        Button(onClick = { viewModel.onAddExistingWalletAction() }) {
-            Text(text = "Add Existing Wallet")
+        if (!viewState.isWalletActive) {
+            Button(onClick = { viewModel.onAddExistingWalletAction() }) {
+                Text(text = "Add Existing Wallet")
+            }
+        } else {
+            Text(
+                text = """
+                    Wallet Address: ${viewState.walletAddress}
+                    Balance: ${viewState.walletBalance} Eth
+                """.trimIndent()
+            )
+            Button(onClick = { /*TODO*/ }) {
+                Text(text = "Send Eth")
+            }
+            Button(onClick = { viewModel.onLogoutAction() }) {
+                Text(text = "Logout")
+            }
         }
     }
 }

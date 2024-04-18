@@ -15,11 +15,14 @@ import javax.inject.Inject
 class EthereumRepository @Inject constructor(
     private val web3j: Web3j,
     @ApplicationContext
-    private val context: Context
+    private val context: Context,
+    private val appSettings: AppSettings
 ) {
     suspend fun importWallet(mnemonic: String): Credentials {
         return withContext(Dispatchers.IO) {
-            WalletUtils.loadBip39Credentials("", mnemonic)
+            val wallet = WalletUtils.loadBip39Credentials("", mnemonic)
+            appSettings.saveMnemonic(mnemonic)
+            wallet
         }
     }
 
@@ -32,7 +35,9 @@ class EthereumRepository @Inject constructor(
 
     suspend fun generateNewWallet(): Bip39Wallet {
         return withContext(Dispatchers.IO) {
-            WalletUtils.generateBip39Wallet("", context.filesDir)
+            val wallet = WalletUtils.generateBip39Wallet("", context.filesDir)
+            appSettings.saveMnemonic(wallet.mnemonic)
+            wallet
         }
     }
 }
